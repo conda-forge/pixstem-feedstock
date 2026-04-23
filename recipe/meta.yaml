@@ -6,20 +6,20 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 57294224571a3a8192974ef07a13ff5d5056e7ac941d1ece5a2eb5f2e2132cf3
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
 requirements:
   host:
-    - python >=3
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3
+    - python >={{ python_min }}
     - scipy
     - numpy >=1.13
     - h5py
@@ -31,6 +31,8 @@ requirements:
     - hyperspy >=1.4
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - pixstem
   commands:
